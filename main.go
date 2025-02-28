@@ -42,7 +42,7 @@ func main() {
 		engine.Static("/static", "./static")
 
 		// Load templates with explicit path
-		engine.LoadHTMLGlob("resource/templates/**/*.html")
+		engine.LoadHTMLGlob("resources/templates/**/*.html")
 
 		// Routes
 		engine.GET("/", handler.GetProducts)

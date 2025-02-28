@@ -1,7 +1,7 @@
 module.exports = {
     content: [
-        "./templates/**/*.html",
-        "./handlers/**/*.go"
+        "./resources/templates/**/*.html",
+        "./resources/handlers/**/*.go"
     ],
     theme: {
         extend: {},
