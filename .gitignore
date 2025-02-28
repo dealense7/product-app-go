@@ -1,0 +1,60 @@
+# .gitignore
+# Go
+/bin/
+/go.sum
+/go.work
+/vendor/
+/coverage.txt
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Node.js
+/node_modules/
+/package-lock.json
+/yarn.lock
+/.npm
+/.pnp
+.pnp.js
+
+# Build output
+/static/css/main.css
+/static/css/main.css.map
+/static/js/app.js
+/static/js/app.js.map
+
+# Environment files
+.env
+
+# Air live reload
+/tmp/
+/bin/air
+.air*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test binaries
+*.test
+
+# Editor configs
+!.editorconfig

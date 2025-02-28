@@ -1,0 +1,14 @@
+{
+  "name": "product-app",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx concurrently \"npx tailwindcss -i ./resources/assets/css/app.css -o ./static/css/main.css --watch\", \"npx esbuild ./resources/assets/js/app.js --bundle --outfile=./static/js/app.js --watch\"",
+    "build": "npx tailwindcss -i ./resources/assets/css/app.css -o ./static/css/main.css --minify && npx esbuild ./resources/assets/js/app.js --bundle --minify --outfile=./static/js/app.js"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.8",
+    "autoprefixer": "10.4.16",
+    "postcss": "8.4.31",
+    "tailwindcss": "3.3.3"
+  }
+}
