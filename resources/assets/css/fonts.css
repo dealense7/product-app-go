@@ -1,0 +1,31 @@
+@font-face {
+    font-family: medium;
+    src: url("../assets/fonts/FiraGO-Medium.woff2") format('woff2'),
+    url("../assets/fonts/FiraGO-Medium.woff") format('woff');
+}
+@font-face {
+    font-family: normal;
+    src: url("../assets/fonts/FiraGO-Regular.woff2") format('woff2'),
+    url("../assets/fonts/FiraGO-Regular.woff") format('woff');
+}
+@font-face {
+    font-family: bold;
+    src: url("../assets/fonts/FiraGO-Bold.woff2") format('woff2'),
+    url("../assets/fonts/FiraGO-Bold.woff") format('woff');
+}
+
+.font-medium{
+    font-family: medium, serif;
+}
+
+.font-normal{
+    font-family: normal, serif;
+}
+
+.font-bold{
+    font-family: bold, serif;
+}
+
+.text-xx{
+    font-size: 11px;
+}

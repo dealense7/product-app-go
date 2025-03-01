@@ -1,17 +1,32 @@
 {{ template "base" . }}
 
 {{ define "content" }}
-<div x-data="{ showDetails: false }">
-    <div class="grid grid-cols-3 gap-6">
+
+{{ template "main-header"}}
+
+<div class="border-b"
+     x-data="{
+          open: false,
+          modalName: 'Product Name',
+          modalBrandName: 'Brand Name',
+          modalImageUrl: '',
+          modalMaxPrice: 0,
+          modalPrices: [],
+     }"
+>
+    <div class="w-full sm:w-8/12 mx-auto font-normal border-r border-l grid lg:grid-cols-5 xl:grid-cols-7 grid-cols-2 md:grid-cols-3 gap-3 px-1.5">
         {{ range .products }}
             <div class="col-span-1">
-                {{ template "product-card" . }}
+                {{ template "product-card" .}}
             </div>
         {{ else }}
             <div class="col-span-3 text-center text-gray-500">
                 No products found
             </div>
         {{ end }}
+
+        {{ template "card-modal" .}}
     </div>
 </div>
+
 {{ end }}

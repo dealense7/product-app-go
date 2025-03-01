@@ -1,9 +1,65 @@
 {{ define "product-card" }}
-    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-        <h2 class="text-xl font-semibold mb-2 text-gray-700">{{ .Name }}</h2>
-            <button @click="showDetails = !showDetails"
-                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
-                Details
-            </button>
+    <div class="my-2"
+         x-data="{
+            displayName: `{{ .Name }}`,
+            brandName: `{{ .Brand }}`,
+            sortedData: [],
+            maxPrice: 0,
+            minPrice: 0,
+            showDate: '',
+            itemUnit: {},
+            imgUrl: '{{ .Image }}',
+         }"
+         x-on:click="modalName =brandName;modalBrandName = displayName;modalImageUrl = imgUrl; modalMaxPrice = maxPrice; modalPrices = sortedData; open=true; console.log(modalPrices)"
+         x-init="
+            // Prices
+            itemPrices = JSON.parse('{{.PriceInfo}}');
+            sortedData = itemPrices.sort((a, b) => a.current_price - b.current_price);
+            maxPrice = sortedData[itemPrices.length-1].current_price;
+            minPrice = sortedData[0].current_price;
+
+            // Date
+            const date = new Date(sortedData[0].created_at);
+            const monthNameShort = new Intl.DateTimeFormat('ka-GE', { month: 'short', day: '2-digit' }).format(date);
+            showDate = monthNameShort;
+
+            // Unit
+            const unit = {
+                'pcs': {'label': 'X',  'class': 'bg-green-600 rounded-sm'},
+                'g': {'label': 'გრ', 'class': 'bg-gray-600 rounded'},
+                'ml': {'label': 'მლ', 'class': 'bg-gray-600 rounded'},
+            };
+
+            itemUnit = unit.{{ .UnitType }};
+         "
+    >
+        <!-- Image, Time of price update and unit label -->
+        <div class="w-full h-44 relative bg-white shadow-sm rounded-sm p-5 cursor-pointer">
+            <img :src="imgUrl" loading="lazy" class="object-contain w-full h-full"/>
+            <span :class="itemUnit.class" class="absolute left-1 font-normal bottom-1 text-xx px-1 text-white">{{ .Unit }} <span x-text="itemUnit.label"></span></span>
+            <span x-text="showDate" class="text-xx absolute right-1 bottom-1"></span>
+        </div>
+
+        <!-- Name of the Brand -->
+        <h3 class="my-1 text-xs font-bold text-gray-800 cursor-pointer" x-text="brandName"></h3>
+
+        <!-- Name of the Product -->
+        <span class="text-xx mt-1 grid font-normal text-neutral-700 h-8 cursor-pointer">
+            <span class="line-clamp-2" x-text="displayName"></span>
+        </span>
+
+        <!-- Lowest Price and diff between lowest and highest -->
+        <div class="flex items-center justify-between cursor-pointer">
+            <h3 class="my-1 text-xs font-bold text-gray-950">
+                ₾ <span x-text="(minPrice / 100).toFixed(2)"></span>
+            </h3>
+            <div class="flex items-center my-1 text-xx font-normal text-gray-950">
+                <svg xmlns="http://www.w3.org/2000/svg" transform="rotate(180)" width="16" height="16"
+                     fill="#00A86B" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5"/>
+                </svg>
+                ₾ <span x-text="((maxPrice - minPrice) / 100).toFixed(2)"></span>
+            </div>
+        </div>
     </div>
 {{ end }}
