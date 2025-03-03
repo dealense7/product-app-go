@@ -1,13 +1,14 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"github.com/dealense7/product-app/app/handlers"
 	"github.com/dealense7/product-app/app/repositories"
 	"github.com/dealense7/product-app/app/services"
 	"github.com/dealense7/product-app/utils"
 	"github.com/jmoiron/sqlx"
-	"os"
-
 	"github.com/gin-gonic/gin"
 	"go.uber.org/dig"
 	"go.uber.org/zap"
@@ -23,15 +24,15 @@ func BuildContainer() *dig.Container {
 	container.Provide(utils.BuildDSN)
 	container.Provide(utils.NewDB)
 
-	// Product
+	// Product dependencies
 	container.Provide(repositories.NewMySQLProductRepository)
 	container.Provide(services.NewProductService)
 
-	// Product
+	// Currency dependencies
 	container.Provide(repositories.NewMySQLCurrencyRepository)
 	container.Provide(services.NewCurrencyService)
 
-	// Gas
+	// Gas dependencies
 	container.Provide(repositories.NewMySQLGasRepository)
 	container.Provide(services.NewGasService)
 
@@ -41,34 +42,40 @@ func BuildContainer() *dig.Container {
 
 	return container
 }
+
 func main() {
 	container := BuildContainer()
 
+	// Invoke the container to resolve dependencies and start the server.
 	err := container.Invoke(func(
 		engine *gin.Engine,
 		handler *handlers.WebHandler,
 		db *sqlx.DB,
 		logger *zap.Logger,
 	) {
-		// Load Assets
+		// Serve static assets
 		engine.Static("/static", "./static")
 
-		// Load templates with explicit path
+		// Load HTML templates from specified directory
 		engine.LoadHTMLGlob("resources/templates/**/*.html")
 
-		// Routes
+		// Define application routes
 		engine.GET("/", handler.GetProducts)
 
-		// Server setup
+		// Determine port from environment or use default 8080
 		port := os.Getenv("PORT")
 		if port == "" {
 			port = "8080"
 		}
-		logger.Info("Starting server", zap.String("port", port))
-		engine.Run(":" + port)
-	})
 
+		// Log the server start and run it
+		logger.Info("Starting server", zap.String("port", port))
+		if err := engine.Run(":" + port); err != nil {
+			logger.Fatal("Server encountered an error", zap.Error(err))
+		}
+	})
+	// If the container fails to resolve dependencies, log the detailed error.
 	if err != nil {
-		panic(err)
+		log.Fatalf("Failed to invoke container: %+v", err)
 	}
 }
