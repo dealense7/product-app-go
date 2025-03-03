@@ -36,12 +36,12 @@
                                     <!-- price and diff from highest to current -->
                                     <div class="grid">
                                         <span class="text-sm font-medium text-gray-900">₾ <span x-text="(price.current_price/100).toFixed(2)"></span></span>
-                                        <div class="flex items-center -ml-1" x-show="(modalMaxPrice - price.current_price) > 0">
+                                        <div class="flex items-center -ml-1" x-show="price.diff > 0">
                                             <svg xmlns="http://www.w3.org/2000/svg" transform="rotate(180)" width="16" height="16" fill="#00A86B" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5"/>
                                             </svg>
                                             <span class="text-xs font-normal text-gray-600">
-                                                <small x-text="((modalMaxPrice - price.current_price)/100).toFixed(2)"></small>
+                                                <small x-text="(price.diff/100).toFixed(2)"></small>
                                             </span>
                                         </div>
                                     </div>

@@ -38,11 +38,17 @@ func (jp JSONPriceInfo) Value() (driver.Value, error) {
 }
 
 type Product struct {
-	ID        int     `json:"id" db:"id"`
-	Name      string  `json:"name" db:"name"`
-	Brand     string  `json:"brand" db:"brand"`
-	Unit      float64 `json:"unit" db:"unit"`
-	UnitType  string  `json:"unit_type" db:"unit_type"`
-	Image     string  `json:"image" db:"image"`
-	PriceInfo string  `json:"price_info" db:"price_info"`
+	ID        int    `json:"id" db:"id"`
+	Name      string `json:"name" db:"name"`
+	Brand     string `json:"brand" db:"brand"`
+	Unit      string `json:"unit" db:"unit"`
+	UnitType  string `json:"unit_type" db:"unit_type"`
+	Image     string `json:"image" db:"image"`
+	PriceInfo string `json:"price_info" db:"price_info"`
+}
+
+type Category struct {
+	ID       int       `json:"id" db:"id"`
+	Name     string    `json:"name" db:"name"`
+	Products []Product `json:"products" db:"items"`
 }

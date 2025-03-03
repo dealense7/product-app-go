@@ -22,9 +22,21 @@ func BuildContainer() *dig.Container {
 
 	container.Provide(utils.BuildDSN)
 	container.Provide(utils.NewDB)
+
+	// Product
 	container.Provide(repositories.NewMySQLProductRepository)
 	container.Provide(services.NewProductService)
-	container.Provide(handlers.NewProductHandler)
+
+	// Product
+	container.Provide(repositories.NewMySQLCurrencyRepository)
+	container.Provide(services.NewCurrencyService)
+
+	// Gas
+	container.Provide(repositories.NewMySQLGasRepository)
+	container.Provide(services.NewGasService)
+
+	container.Provide(handlers.NewWebHandler)
+
 	container.Provide(zap.NewProduction)
 
 	return container
@@ -34,7 +46,7 @@ func main() {
 
 	err := container.Invoke(func(
 		engine *gin.Engine,
-		handler *handlers.ProductHandler,
+		handler *handlers.WebHandler,
 		db *sqlx.DB,
 		logger *zap.Logger,
 	) {

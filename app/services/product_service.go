@@ -13,6 +13,10 @@ func NewProductService(repo interfaces.ProductRepository) interfaces.ProductServ
 	return &ProductService{repo: repo}
 }
 
-func (s *ProductService) GetProducts() ([]models.Product, error) {
-	return s.repo.FindAll()
+func (s *ProductService) GetProducts(filters map[string]interface{}) ([]models.Product, error) {
+	return s.repo.FindAll(filters)
+}
+
+func (s *ProductService) GroupByCategory() ([]models.Category, error) {
+	return s.repo.GroupByCategory()
 }

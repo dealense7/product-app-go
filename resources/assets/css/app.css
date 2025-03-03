@@ -4,3 +4,56 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body{
+    background-color: #f8f8f8;
+}
+:root {
+    --slider-speed: 57s; /* Control the speed of the animation */
+}
+
+
+.carousel {
+    overflow: hidden;
+
+    > * {
+        flex: 0 0 100%;
+    }
+
+    &:hover .group {
+        animation-play-state: paused;
+    }
+
+    .group {
+        width: fit-content;
+        will-change: transform;
+        animation: scrolling 25s linear infinite;
+
+    }
+}
+
+@keyframes scrolling {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.carousel::before,
+.carousel::after {
+    background: linear-gradient(to right, #f8f8f8 0%, rgba(248, 248, 248, 0) 70%);
+    content: "";
+    height: 36px;
+    position: absolute;
+    width: 200px;
+    z-index: 2;
+}
+
+.carousel::after {
+    right: 0;
+    top: 0;
+    -webkit-transform: rotateZ(180deg);
+    transform: rotateZ(180deg);
+}

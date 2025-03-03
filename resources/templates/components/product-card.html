@@ -10,13 +10,14 @@
             itemUnit: {},
             imgUrl: '{{ .Image }}',
          }"
-         x-on:click="modalName =brandName;modalBrandName = displayName;modalImageUrl = imgUrl; modalMaxPrice = maxPrice; modalPrices = sortedData; open=true; console.log(modalPrices)"
+         x-on:click="setData(brandName, displayName, imgUrl, sortedData); open=true;"
          x-init="
             // Prices
             itemPrices = JSON.parse('{{.PriceInfo}}');
             sortedData = itemPrices.sort((a, b) => a.current_price - b.current_price);
             maxPrice = sortedData[itemPrices.length-1].current_price;
             minPrice = sortedData[0].current_price;
+            sortedData.map((price, index) => { price.diff = maxPrice - price.current_price} );
 
             // Date
             const date = new Date(sortedData[0].created_at);

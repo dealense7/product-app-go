@@ -1,0 +1,39 @@
+{{ define "grouped-categories" }}
+    <div class="border-b"
+         x-data="{
+              open: false,
+              modalName: 'Product Name',
+              modalBrandName: 'Brand Name',
+              modalImageUrl: '',
+              modalMaxPrice: 0,
+              modalPrices: [],
+              setData(modalName, modalBrandName, modalImageUrl, modalPrices){
+                this.modalName = modalName;
+                this.modalBrandName = modalBrandName;
+                this.modalImageUrl = modalImageUrl;
+                this.modalPrices = modalPrices;
+              }
+         }"
+    >
+        <div class="w-full sm:w-8/12 mx-auto border-r border-l">
+            {{ range . }}
+            <div class="px-2 font-bold text-xs border-t pt-2">
+                {{ .Name }}
+            </div>
+            <div class="grid lg:grid-cols-5 xl:grid-cols-7 grid-cols-2 md:grid-cols-3 gap-3 px-1.5">
+                {{ range .Products }}
+                <div class="col-span-1">
+                    {{ template "product-card" .}}
+                </div>
+                {{ else }}
+                <div class="col-span-3 text-center text-gray-500">
+                    No products at all
+                </div>
+                {{ end }}
+            </div>
+            {{ end }}
+        </div>
+        {{ template "card-modal" .}}
+
+    </div>
+{{ end }}

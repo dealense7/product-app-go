@@ -5,9 +5,12 @@ import (
 )
 
 type ProductRepository interface {
-	FindAll() ([]models.Product, error)
+	FindAll(filters map[string]interface{}) ([]models.Product, error)
+	GetFilteredProducts(filters map[string]interface{}) ([]models.Product, error)
+	GroupByCategory() ([]models.Category, error)
 }
 
 type ProductService interface {
-	GetProducts() ([]models.Product, error)
+	GetProducts(map[string]interface{}) ([]models.Product, error)
+	GroupByCategory() ([]models.Category, error)
 }
