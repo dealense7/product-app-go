@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "scripts": {
     "make:static": "mkdir -p ./static/assets",
-    "css": "npx tailwindcss -i ./resources/assets/css/app.css -o ./static/css/main.css --watch",
-    "js": "npx esbuild ./resources/assets/js/app.js --bundle --outfile=./static/js/app.js --watch",
+    "css": "npx tailwindcss -i ./resources/assets/css/app.css -o ./static/css/main.css --minify",
+    "js": "npx esbuild ./resources/assets/js/app.js --bundle --minify --outfile=./static/js/app.js",
     "copy:imgs": "cp -R ./resources/assets/imgs ./static/assets/imgs",
     "copy:fonts": "cp -R ./resources/assets/fonts ./static/assets/fonts",
     "dev": "npm run make:static && npx concurrently \"npm run css\" \"npm run js\" \"npm run copy:imgs\" \"npm run copy:fonts\"",
-    "build": "npx tailwindcss -i ./resources/assets/css/app.css -o ./static/css/main.css --minify && npx esbuild ./resources/assets/js/app.js --bundle --minify --outfile=./static/js/app.js"
+    "build": "npm run make:static && npx tailwindcss -i ./resources/assets/css/app.css -o ./static/css/main.css --minify && npx esbuild ./resources/assets/js/app.js --bundle --minify --outfile=./static/js/app.js && npm run copy:imgs && npm run copy:fonts"
   },
   "dependencies": {
     "alpinejs": "^3.14.8",
