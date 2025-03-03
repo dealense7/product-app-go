@@ -15,7 +15,7 @@
 .pnp.js
 
 # Build output
-/static/
+#/static/
 
 # Environment files
 .env
